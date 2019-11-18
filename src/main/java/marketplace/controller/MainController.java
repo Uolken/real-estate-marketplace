@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
@@ -31,10 +32,30 @@ public class MainController {
         return arr;
     }
 
+    @GetMapping("/points1")
+    @ResponseBody
+    public List<Coordinates> getPointsByCoord(
+            @RequestParam Double southWest_x,
+            @RequestParam Double southWest_y,
+            @RequestParam Double northEast_x,
+            @RequestParam Double northEast_y
+    ){
+
+        return arr.stream().filter(coordinates -> {
+            return (coordinates.getX() >= southWest_x &&
+                    coordinates.getX() <= northEast_x &&
+                    coordinates.getY() >= southWest_y &&
+                    coordinates.getY() <= northEast_y);
+        }).collect(Collectors.toList());
+    }
+
+
+
     @PutMapping("/points")
     public void addPoints(@RequestBody Coordinates coordinates){
         arr.add(coordinates);
     }
+
 
 
 }

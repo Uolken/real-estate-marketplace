@@ -1,4 +1,5 @@
 tomtom.setProductInfo('KT5Fjv06WL9YWbIw7a9x6ZZp1WxBwGvM', '4.47.6');
+
 var passengerInitCoordinates = [52.360306, 4.876935];
 var passengerIcon = tomtom.L.icon({
     iconUrl: '/static/map-sdk/images/ic_map_poi_048-black.png',
@@ -11,11 +12,12 @@ var passengerMarker;
 var map = tomtom.L.map('map', {
     key: 'KT5Fjv06WL9YWbIw7a9x6ZZp1WxBwGvM',
     center: passengerInitCoordinates,
-    zoom: 14
+    zoom: 14,
 });
+layer = L.layerGroup().addTo(map);
 passengerMarker = tomtom.L.marker(passengerInitCoordinates, {
     icon: passengerIcon
-}).addTo(map);
+}).addTo(layer);
 
 
 
@@ -30,11 +32,11 @@ function convertToLatLon(coordinateString) {
 function drawPassengerMarkerOnMap(geoResponse) {
 
     if (geoResponse && geoResponse.address && geoResponse.address.freeformAddress) {
-        map.removeLayer(passengerMarker);
+
         var popupContent = geoResponse.address.freeformAddress;
         passengerMarker = tomtom.L.marker(convertToLatLon(geoResponse.position), {
             icon: passengerIcon
-        }).addTo(map).bindPopup(popupContent).openPopup();
+        }).addTo(layer).bindPopup(popupContent).openPopup();
     }
 }
 map.on('click', function(event) {
@@ -71,6 +73,31 @@ promise.then(
     for (i in result) {
         tomtom.L.marker([result[i].x, result[i].y], {
             icon: passengerIcon
-        }).addTo(map);
+        }).addTo(layer)
+          .bindPopup('A pretty CSS3 popup.<br> Easily customizable.');
     }
 });
+map.on('moveend',(e)=>{
+                        let url = new URL("http://localhost:8080/points1");
+                        let params = {
+                            northEast_x: e.target.getBounds()._northEast.lat,
+                            northEast_y: e.target.getBounds()._northEast.lng,
+                            southWest_x: e.target.getBounds()._southWest.lng,
+                            southWest_y: e.target.getBounds()._southWest.lng
+                         };
+                        url.search = new URLSearchParams(params).toString()
+                        let promise = fetch(url);
+
+
+                        promise.then(result => result.json()).
+                                then(result =>{
+                                    layer.clearLayers();
+                                    for (i in result) {
+                                            tomtom.L.marker([result[i].x, result[i].y], {
+                                                icon: passengerIcon
+                                            }).addTo(layer)
+                                              .bindPopup('A pretty CSS3 popup.<br> Easily customizable.');
+                                        }
+                                });
+
+                });
