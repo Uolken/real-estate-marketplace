@@ -45,8 +45,9 @@ map.on('click', function(event) {
     tomtom.reverseGeocode().position(position).go().then(function(results) {
         var coord = results.position.split(",")
         var coordinates = {
-            x: parseFloat(coord[0]),
-            y: parseFloat(coord[1])
+
+            lat: (coord[0]),
+            lng: (coord[1])
         };
 
         fetch("http://localhost:8080/points", {
@@ -66,25 +67,16 @@ map.on('click', function(event) {
 
 
 
-let promise = fetch("http://localhost:8080/points");
-promise.then(
-    (result) => result.json()
-).then((result) => {
-    for (i in result) {
-        tomtom.L.marker([result[i].x, result[i].y], {
-            icon: passengerIcon
-        }).addTo(layer)
-          .bindPopup('A pretty CSS3 popup.<br> Easily customizable.');
-    }
-});
+
 map.on('moveend',(e)=>{
-                        let url = new URL("http://localhost:8080/points1");
+                        let url = new URL("http://localhost:8080/points");
                         let params = {
                             northEast_x: e.target.getBounds()._northEast.lat,
                             northEast_y: e.target.getBounds()._northEast.lng,
-                            southWest_x: e.target.getBounds()._southWest.lng,
+                            southWest_x: e.target.getBounds()._southWest.lat,
                             southWest_y: e.target.getBounds()._southWest.lng
                          };
+
                         url.search = new URLSearchParams(params).toString()
                         let promise = fetch(url);
 
@@ -93,7 +85,7 @@ map.on('moveend',(e)=>{
                                 then(result =>{
                                     layer.clearLayers();
                                     for (i in result) {
-                                            tomtom.L.marker([result[i].x, result[i].y], {
+                                            tomtom.L.marker([result[i].lat, result[i].lng], {
                                                 icon: passengerIcon
                                             }).addTo(layer)
                                               .bindPopup('A pretty CSS3 popup.<br> Easily customizable.');

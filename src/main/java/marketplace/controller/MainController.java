@@ -1,6 +1,12 @@
 package marketplace.controller;
 
-import marketplace.Coordinates;
+import marketplace.entity.House;
+import marketplace.entity.HouseStatus;
+import marketplace.entity.User;
+import marketplace.repos.UserRepos;
+import marketplace.service.HouseService;
+import marketplace.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,49 +17,50 @@ import java.util.stream.Collectors;
 @Controller
 public class MainController {
 
-    private List<Coordinates> arr;
+    //@Autowired
+    private HouseService houseService;
+    //@Autowired
+    private UserService userService;
 
-    public MainController(){
-        arr = new ArrayList<>();
-        arr.add(new Coordinates(52.353226, 4.889268));
-        arr.add(new Coordinates(52.363049, 4.901847));
-        arr.add(new Coordinates(52.365292, 4.857654));
-        arr.add(new Coordinates(52.366852,4.893838));
+
+
+    @Autowired
+    public MainController(HouseService houseService, UserService userService){
+        this.userService = userService;
+        this.houseService = houseService;
+        User user = new User("login", "Password");
+        userService.saveUser(user);
+        houseService.saveHouse(new House(52.353226, 4.889268, user, HouseStatus.SALE, 100));
+        houseService.saveHouse(new House(52.363049, 4.901847, user, HouseStatus.SALE, 100));
+        houseService.saveHouse(new House(52.365292, 4.857654, user, HouseStatus.SALE, 100));
+        houseService.saveHouse(new House(52.366852,4.893838, user, HouseStatus.SALE, 100));
     }
 
     @GetMapping("/home")
     public String getMainPage(){
+
         return "home";
     }
 
     @GetMapping("/points")
     @ResponseBody
-    public List<Coordinates> getPoints(){
-        return arr;
-    }
-
-    @GetMapping("/points1")
-    @ResponseBody
-    public List<Coordinates> getPointsByCoord(
+    public List<House> getPointsByCoord(
             @RequestParam Double southWest_x,
             @RequestParam Double southWest_y,
             @RequestParam Double northEast_x,
             @RequestParam Double northEast_y
     ){
 
-        return arr.stream().filter(coordinates -> {
-            return (coordinates.getX() >= southWest_x &&
-                    coordinates.getX() <= northEast_x &&
-                    coordinates.getY() >= southWest_y &&
-                    coordinates.getY() <= northEast_y);
-        }).collect(Collectors.toList());
+        List<House> houses = houseService.getHouseByCoord(southWest_x, southWest_y, northEast_x, northEast_y);
+        return houses;
     }
 
 
 
     @PutMapping("/points")
-    public void addPoints(@RequestBody Coordinates coordinates){
-        arr.add(coordinates);
+    public void addPoints(@RequestBody House house){
+
+        houseService.saveHouse(house);
     }
 
 
