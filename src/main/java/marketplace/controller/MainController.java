@@ -3,16 +3,13 @@ package marketplace.controller;
 import marketplace.entity.House;
 import marketplace.entity.HouseStatus;
 import marketplace.entity.User;
-import marketplace.repos.UserRepos;
 import marketplace.service.HouseService;
 import marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
@@ -36,11 +33,13 @@ public class MainController {
         houseService.saveHouse(new House(52.366852,4.893838, user, HouseStatus.SALE, 100));
     }
 
+
     @GetMapping("/home")
     public String getMainPage(){
 
-        return "home";
+        return "index";
     }
+
 
     @GetMapping("/points")
     @ResponseBody
@@ -56,7 +55,7 @@ public class MainController {
     }
 
 
-
+    @CrossOrigin(origins = "http://localhost:8080")
     @PutMapping("/points")
     public void addPoints(@RequestBody House house){
 

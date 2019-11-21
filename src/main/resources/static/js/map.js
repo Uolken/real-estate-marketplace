@@ -2,7 +2,7 @@ tomtom.setProductInfo('KT5Fjv06WL9YWbIw7a9x6ZZp1WxBwGvM', '4.47.6');
 
 var passengerInitCoordinates = [52.360306, 4.876935];
 var passengerIcon = tomtom.L.icon({
-    iconUrl: '/static/map-sdk/images/ic_map_poi_048-black.png',
+    iconUrl: '/map-sdk/images/ic_map_poi_048-black.png',
     iconSize: [30, 30],
     iconAnchor: [15, 30],
     popupAnchor: [0, -30]
@@ -50,7 +50,7 @@ map.on('click', function(event) {
             lng: (coord[1])
         };
 
-        fetch("http://localhost:8080/points", {
+        fetch("http://localhost:8081/points", {
             method: 'PUT',
             credentials: 'same-origin',
             headers: {
@@ -69,7 +69,7 @@ map.on('click', function(event) {
 
 
 map.on('moveend',(e)=>{
-                        let url = new URL("http://localhost:8080/points");
+                        let url = new URL("http://localhost:8081/points");
                         let params = {
                             northEast_x: e.target.getBounds()._northEast.lat,
                             northEast_y: e.target.getBounds()._northEast.lng,
