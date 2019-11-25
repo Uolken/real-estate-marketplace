@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:8080")
 @Controller
 public class MainController {
 
@@ -25,7 +26,7 @@ public class MainController {
     public MainController(HouseService houseService, UserService userService){
         this.userService = userService;
         this.houseService = houseService;
-        User user = new User("login", "Password");
+        User user = new User("id", "name","avatar", "email");
         userService.saveUser(user);
         houseService.saveHouse(new House(52.353226, 4.889268, user, HouseStatus.SALE, 100));
         houseService.saveHouse(new House(52.363049, 4.901847, user, HouseStatus.SALE, 100));
@@ -55,7 +56,6 @@ public class MainController {
     }
 
 
-    @CrossOrigin(origins = "http://localhost:8080")
     @PutMapping("/points")
     @ResponseBody
     public void addPoints(@RequestBody House house){
