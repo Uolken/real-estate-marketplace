@@ -1,1 +1,4 @@
+.header.svelte-1m925eb{grid-column-start:1;grid-column-end:4;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr}
+.houseList.svelte-z07a2j{display:grid;grid-template-columns:1fr 1fr;padding:1em;grid-gap:1em;overflow:scroll;background-color:#0ff}.element.svelte-z07a2j{height:20vh;overflow:hidden}.element.svelte-z07a2j img.svelte-z07a2j{min-width:100%;min-height:100%;max-height:150%;overflow:hidden}
+body{margin:0}.wrapper.svelte-oezxvs{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:10vh 90vh}#map.svelte-oezxvs{grid-column-start:1;grid-column-end:3}
 

@@ -57,6 +57,7 @@ public class MainController {
 
     @CrossOrigin(origins = "http://localhost:8080")
     @PutMapping("/points")
+    @ResponseBody
     public void addPoints(@RequestBody House house){
 
         houseService.saveHouse(house);
