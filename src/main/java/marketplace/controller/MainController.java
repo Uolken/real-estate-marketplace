@@ -2,12 +2,21 @@ package marketplace.controller;
 
 import marketplace.entity.House;
 import marketplace.entity.HouseStatus;
+import marketplace.entity.Image;
 import marketplace.entity.User;
 import marketplace.service.HouseService;
+import marketplace.service.ImageService;
 import marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,12 +29,15 @@ public class MainController {
     //@Autowired
     private UserService userService;
 
+    private ImageService imageService;
+
 
 
     @Autowired
-    public MainController(HouseService houseService, UserService userService){
+    public MainController(HouseService houseService, UserService userService, ImageService imageService){
         this.userService = userService;
         this.houseService = houseService;
+        this.imageService = imageService;
         User user = new User("id", "name","avatar", "email");
         userService.saveUser(user);
         houseService.saveHouse(new House(52.353226, 4.889268, user, HouseStatus.SALE, 100));
@@ -51,10 +63,22 @@ public class MainController {
             @RequestParam Double northEast_y
     ){
 
-        List<House> houses = houseService.getHouseByCoord(southWest_x, southWest_y, northEast_x, northEast_y);
+         List<House> houses = houseService.findHouseByCoord(southWest_x, southWest_y, northEast_x, northEast_y);
         return houses;
     }
 
+
+    @GetMapping("/house")
+    @ResponseBody
+    public List<House> getHouse(){
+        return houseService.findAll();
+    }
+
+    @GetMapping("/house/{id}")
+    @ResponseBody
+    public House getHouse(@PathVariable Long id) throws Exception{
+        return houseService.findById(id);
+    }
 
     @PutMapping("/points")
     @ResponseBody
@@ -63,6 +87,32 @@ public class MainController {
         houseService.saveHouse(house);
     }
 
+    @PostMapping("/upload")
+    @ResponseBody
+    String uploadImage(@RequestParam(value = "file", required = false) MultipartFile file){
+        imageService.saveImage(file);
+        return "Success";
+    }
 
+    @GetMapping("/test")
+    public String testImage(){
+        return "test";
+    }
+
+    @GetMapping("/img/{imgId}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable Long imgId) {
+        // Load file from database
+        Image image = imageService.getImage(imgId);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(image.getFileType()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFileName() + "\"")
+                .body(new ByteArrayResource(image.getData()));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleStorageFileNotFound(Exception e) {
+        return ResponseEntity.badRequest().build();
+    }
 
 }

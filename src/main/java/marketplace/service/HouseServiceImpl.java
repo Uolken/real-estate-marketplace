@@ -18,9 +18,19 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public List<House> getHouseByCoord(Double leftLat, Double leftLng, Double rightLat, Double rightLng) {
+    public List<House> findHouseByCoord(Double leftLat, Double leftLng, Double rightLat, Double rightLng) {
         List<House> houses = houseRepos.findByBetweenBounds(leftLat, leftLng, rightLat, rightLng);
         return houses;
+    }
+
+    @Override
+    public House findById(Long id) throws Exception {
+        return houseRepos.findById(id).orElseThrow(Exception::new);
+    }
+
+    @Override
+    public List<House> findAll() {
+        return (List<House>) houseRepos.findAll();
     }
 
     @Autowired
