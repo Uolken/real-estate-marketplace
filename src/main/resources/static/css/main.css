@@ -1,4 +1,7 @@
-.header.svelte-1m925eb{grid-column-start:1;grid-column-end:4;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr}
-.houseList.svelte-z07a2j{display:grid;grid-template-columns:1fr 1fr;padding:1em;grid-gap:1em;overflow:scroll;background-color:#0ff}.element.svelte-z07a2j{height:20vh;overflow:hidden}.element.svelte-z07a2j img.svelte-z07a2j{min-width:100%;min-height:100%;max-height:150%;overflow:hidden}
-body{margin:0}.wrapper.svelte-oezxvs{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:10vh 90vh}#map.svelte-oezxvs{grid-column-start:1;grid-column-end:3}
+.header.svelte-1pkz3qj{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr}
+.houseList.svelte-1t0j8pw{height:100%;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));grid-template-rows:repeat(auto-fit,25vh);grid-gap:.5em;overflow-y:scroll;overflow-x:hidden;background-color:grey}.element.svelte-1t0j8pw{height:25vh;overflow:hidden;background-size:cover}.houseInfo.svelte-1t0j8pw{font-family:Arial;font-size:24px;color:#fff;text-shadow:0 -1px 0 #000,0 -1px 0 #000,0 1px 0 #000,0 1px 0 #000,-1px 0 0 #000,1px 0 0 #000,-1px 0 0 #000,1px 0 0 #000,-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000,-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000}
+.leaflet-container.svelte-1ae2www{height:100%}
+.house.svelte-phuml8{display:grid;grid-template-columns:1fr;overflow-y:scroll;overflow-x:hidden;background-color:grey}
+.house.svelte-qmqgye{height:100%;display:grid;grid-template-columns:1fr;overflow-y:scroll;overflow-x:hidden;background-color:grey}.house.svelte-qmqgye img.svelte-qmqgye{width:100%;-o-object-fit:cover;object-fit:cover}
+body{margin:0}.wrapper.svelte-14n27fp{display:grid;grid-template-columns:3fr 2fr;grid-template-rows:10vh 90vh}.rPanel.svelte-14n27fp{grid-column-start:2;grid-column-end:3}.header.svelte-14n27fp{grid-column-start:1;grid-column-end:3}.map.svelte-14n27fp{grid-column-start:1;grid-column-end:2;position:relative}
 
