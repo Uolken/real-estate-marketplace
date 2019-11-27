@@ -50,6 +50,12 @@ public class MainController {
     @GetMapping("/home")
     public String getMainPage(){
 
+        return "home";
+    }
+
+    @GetMapping("/index")
+    public String getIndexPage(){
+
         return "index";
     }
 

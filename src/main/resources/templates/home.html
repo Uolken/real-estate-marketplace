@@ -1,23 +1,24 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
-    <title>Real Estate Marketplace</title>
-
-    <meta http-equiv='X-UA-Compatible' content='IE=Edge' />
-    <meta charset='UTF-8'>
-
-    <script src='/map-sdk/tomtom.min.js'></script>
-
-    <link rel='stylesheet' type='text/css' href='/map-sdk/map.css'/>
+    <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.40.1/maps/maps.css'>
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/5.x/5.40.1/maps/maps-web.min.js"></script>
 
 </head>
+<body onload="
+var passengerInitCoordinates = [52.360306, 4.876935];
+        var map = tt.map({
+            key: 'KT5Fjv06WL9YWbIw7a9x6ZZp1WxBwGvM',
+            container: 'map',
+			center: passengerInitCoordinates,
+      zoom: 14
+        });
+		console.log(map);
+">
+<div id='map' class='map'style="width:500px; height:500px;"></div>
+<script>
 
 
-<body>
-
-<div id='map' style='height:500px;width:500px'></div>
-<script src="/js/map.js"></script>
+</script>
 </body>
-</html>
 </html>
