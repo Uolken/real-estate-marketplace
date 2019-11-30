@@ -1,7 +1,5 @@
 package marketplace.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,12 +8,11 @@ public class House {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Double Lat;
-    private Double Lng;
+    private Double lat;
+    private Double lng;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
-    @JsonIgnore
     private User owner;
     @Enumerated(EnumType.STRING)
     private HouseStatus status;
@@ -25,8 +22,8 @@ public class House {
     }
 
     public House(Double lat, Double lng, User owner, HouseStatus status, Integer price) {
-        Lat = lat;
-        Lng = lng;
+        this.lat = lat;
+        this.lng = lng;
         this.owner = owner;
         this.status = status;
         this.price = price;
@@ -41,19 +38,19 @@ public class House {
     }
 
     public Double getLat() {
-        return Lat;
+        return lat;
     }
 
     public void setLat(Double lat) {
-        Lat = lat;
+        this.lat = lat;
     }
 
     public Double getLng() {
-        return Lng;
+        return lng;
     }
 
     public void setLng(Double lng) {
-        Lng = lng;
+        this.lng = lng;
     }
 
     public User getOwner() {

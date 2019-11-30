@@ -1,5 +1,7 @@
 package marketplace.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ public class User {
     private String email;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    @JsonIgnore
     private List<House> houses;
 
     public User() {

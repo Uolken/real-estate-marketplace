@@ -1,9 +1,6 @@
 package marketplace.controller;
 
-import marketplace.entity.House;
-import marketplace.entity.HouseStatus;
-import marketplace.entity.Image;
-import marketplace.entity.User;
+import marketplace.entity.*;
 import marketplace.service.HouseService;
 import marketplace.service.ImageService;
 import marketplace.service.UserService;
@@ -14,7 +11,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -69,8 +65,17 @@ public class MainController {
             @RequestParam Double northEast_y
     ){
 
-         List<House> houses = houseService.findHouseByCoord(southWest_x, southWest_y, northEast_x, northEast_y);
+         List<House> houses = houseService.findMarkerByCoord(southWest_x, southWest_y, northEast_x, northEast_y);
         return houses;
+    }
+
+    @GetMapping("/user/{userId}")
+    @ResponseBody
+    public User getPointsByCoord(
+            @PathVariable String userId
+    ) throws Exception {
+
+        return userService.findById(userId);
     }
 
 

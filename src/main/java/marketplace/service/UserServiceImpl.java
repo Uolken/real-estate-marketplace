@@ -14,6 +14,12 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User user) {
         userRepos.save(user);
     }
+
+    @Override
+    public User findById(String id) throws Exception {
+        return userRepos.findById(id).orElseThrow(Exception::new);
+    }
+
     @Autowired
     UserServiceImpl(UserRepos userRepos){
         this.userRepos = userRepos;
