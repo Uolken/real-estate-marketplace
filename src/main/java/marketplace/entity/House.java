@@ -14,9 +14,15 @@ public class House {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
     private User owner;
+
+
     @Enumerated(EnumType.STRING)
     private HouseStatus status;
     private Integer price;
+
+    private Long picture;
+
+
 
     public House() {
     }
@@ -76,4 +82,13 @@ public class House {
     public void setPrice(Integer price) {
         this.price = price;
     }
+
+    public Long getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Long picture) {
+        this.picture = picture;
+    }
+
 }
