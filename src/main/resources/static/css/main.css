@@ -5,5 +5,6 @@
 body{margin:0}.wrapper.svelte-1uj0gts{height:100%;display:grid;grid-template-columns:3fr 2fr}.map.svelte-1uj0gts{height:100%}.rPanel.svelte-1uj0gts{height:100%;overflow:hidden}
 .houseList.svelte-1c2sn3c{height:100%;background-color:grey;-webkit-box-orient:vertical;flex-direction:column}.element.svelte-1c2sn3c,.houseList.svelte-1c2sn3c{display:-webkit-box;display:flex;-webkit-box-direction:normal}.element.svelte-1c2sn3c{-webkit-box-orient:horizontal;flex-direction:row;height:25vh;overflow:hidden;background-size:cover}.element.svelte-1c2sn3c img.svelte-1c2sn3c{height:25vh;width:auto}.houseInfo.svelte-1c2sn3c{font-family:Arial;font-size:24px}
 .main.svelte-11glr78{display:grid;grid-template-columns:1fr 3fr 1fr;grid-template-rows:20vh auto}.main.svelte-11glr78 img.svelte-11glr78{height:300px;width:300px;padding:10px;border-radius:100%;grid-column:1/2}.userInfo.svelte-11glr78{grid-column:2/4}.houseList.svelte-11glr78{grid-row:2/3;grid-column:2/4;background-color:#7fffd4}
+.leaflet-container.svelte-fff0dd{height:500px}
 body{margin:0}.main.svelte-1mexhow{height:90vh}.header.svelte-1mexhow{height:10vh}
 
