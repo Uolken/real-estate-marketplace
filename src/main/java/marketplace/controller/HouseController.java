@@ -7,7 +7,6 @@ import marketplace.entity.Image;
 import marketplace.entity.User;
 import marketplace.service.HouseService;
 import marketplace.service.ImageService;
-import marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -26,21 +25,13 @@ public class HouseController {
 
     private HouseService houseService;
 
-    private UserService userService;
-
     private ImageService imageService;
 
-
-
     @Autowired
-    public HouseController(HouseService houseService, UserService userService, ImageService imageService){
-        this.userService = userService;
+    public HouseController(HouseService houseService, ImageService imageService) {
         this.houseService = houseService;
         this.imageService = imageService;
     }
-
-
-
 
     @GetMapping("/points")
     public List<House> getPointsByCoord(
@@ -48,39 +39,31 @@ public class HouseController {
             @RequestParam Double southWest_y,
             @RequestParam Double northEast_x,
             @RequestParam Double northEast_y
-    ){
+    ) {
 
         List<House> houses = houseService.findMarkerByCoord(southWest_x, southWest_y, northEast_x, northEast_y);
         return houses;
     }
 
-    @GetMapping("/user/{userId}")
-    public User getPointsByCoord(
-            @PathVariable String userId
-    ) throws Exception {
-
-        return userService.findById(userId);
-    }
-
 
     @GetMapping("/house")
-    public List<House> getHouse(){
+    public List<House> getHouse() {
         return houseService.findAll();
     }
 
     @GetMapping("/house/{id}")
-    public House getHouse(@PathVariable Long id) throws Exception{
+    public House getHouse(@PathVariable Long id) throws Exception {
         return houseService.findById(id);
     }
 
     @PostMapping("/points")
-    public void addPoints(@RequestBody House house){
+    public void addPoints(@RequestBody House house) {
         houseService.saveHouse(house);
     }
 
     @PostMapping("/publish_ad")
     public void publishAd(Authentication authentication, @ModelAttribute AdDtoRequest ad) throws Exception {
-        User user = (authentication != null)?(User)authentication.getPrincipal() : null;
+        User user = (authentication != null) ? (User) authentication.getPrincipal() : null;
         House house = new House();
         String[] split = ad.getAddress().split(",");
         house.setLat(Double.parseDouble(split[1]));
@@ -89,7 +72,6 @@ public class HouseController {
         house.setPrice(ad.getPrice());
         house.setStatus(HouseStatus.valueOf(ad.getType()));
 
-
         house.setPicture(imageService.saveImage(ad.getFile()).getId());
 
         houseService.saveHouse(house);
@@ -97,7 +79,7 @@ public class HouseController {
 
 
     @PostMapping("/upload")
-    String uploadImage(@RequestParam(value = "file", required = false) MultipartFile file){
+    String uploadImage(@RequestParam(value = "file", required = false) MultipartFile file) {
         imageService.saveImage(file);
         return "Success";
     }
@@ -112,7 +94,6 @@ public class HouseController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFileName() + "\"")
                 .body(new ByteArrayResource(image.getData()));
     }
-
 
 
 //    @ExceptionHandler(Exception.class)
