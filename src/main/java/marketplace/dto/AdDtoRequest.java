@@ -6,7 +6,7 @@ public class AdDtoRequest {
     private String address;
     private String type;
     private Integer price;
-    private MultipartFile file;
+    private MultipartFile[] files;
 
     public AdDtoRequest() {
     }
@@ -35,12 +35,12 @@ public class AdDtoRequest {
         this.price = price;
     }
 
-    public MultipartFile getFile() {
-        return file;
+    public MultipartFile[] getFiles() {
+        return files;
     }
 
-    public void setFile(MultipartFile file) {
-        this.file = file;
+    public void setFiles(MultipartFile[] files) {
+        this.files = files;
     }
 
 }

@@ -72,8 +72,9 @@ public class HouseController {
         house.setPrice(ad.getPrice());
         house.setStatus(HouseStatus.valueOf(ad.getType()));
 
-        house.setPicture(imageService.saveImage(ad.getFile()).getId());
-
+        for (MultipartFile i : ad.getFiles()){
+            house.getPictures().add(imageService.saveImage(i));
+        }
         houseService.saveHouse(house);
     }
 

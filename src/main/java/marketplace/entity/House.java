@@ -1,6 +1,8 @@
 package marketplace.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class House {
@@ -20,19 +22,44 @@ public class House {
     private HouseStatus status;
     private Integer price;
 
-    private Long picture;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Image> pictures;
+
+    private String country;
+    private String city;
+    private String street;
+    private Integer buildingNumber;
+
+    private Integer countOfRoomInHouse;
+    private Integer countOfFloor;
+    private Integer floor;
+    private Integer area;
+
+    private String description;
+
 
 
 
     public House() {
+        this.pictures = new ArrayList<>();
     }
 
-    public House(Double lat, Double lng, User owner, HouseStatus status, Integer price) {
+    public House(Double lat, Double lng, User owner, HouseStatus status, Integer price, List<Image> pictures, String country, String city, String street, Integer buildingNumber, Integer countOfRoomInHouse, Integer countOfFloor, Integer floor, Integer area, String description) {
         this.lat = lat;
         this.lng = lng;
         this.owner = owner;
         this.status = status;
         this.price = price;
+        this.pictures = pictures;
+        this.country = country;
+        this.city = city;
+        this.street = street;
+        this.buildingNumber = buildingNumber;
+        this.countOfRoomInHouse = countOfRoomInHouse;
+        this.countOfFloor = countOfFloor;
+        this.floor = floor;
+        this.area = area;
+        this.description = description;
     }
 
     public Long getId() {
@@ -83,12 +110,83 @@ public class House {
         this.price = price;
     }
 
-    public Long getPicture() {
-        return picture;
+    public List<Image> getPictures() {
+        return pictures;
     }
 
-    public void setPicture(Long picture) {
-        this.picture = picture;
+    public void setPictures(List<Image> pictures) {
+        this.pictures = pictures;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public Integer getBuildingNumber() {
+        return buildingNumber;
+    }
+
+    public void setBuildingNumber(Integer buildingNumber) {
+        this.buildingNumber = buildingNumber;
+    }
+
+    public Integer getCountOfRoomInHouse() {
+        return countOfRoomInHouse;
+    }
+
+    public void setCountOfRoomInHouse(Integer countOfRoomInHouse) {
+        this.countOfRoomInHouse = countOfRoomInHouse;
+    }
+
+    public Integer getCountOfFloor() {
+        return countOfFloor;
+    }
+
+    public void setCountOfFloor(Integer countOfFloor) {
+        this.countOfFloor = countOfFloor;
+    }
+
+    public Integer getFloor() {
+        return floor;
+    }
+
+    public void setFloor(Integer floor) {
+        this.floor = floor;
+    }
+
+    public Integer getArea() {
+        return area;
+    }
+
+    public void setArea(Integer area) {
+        this.area = area;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
