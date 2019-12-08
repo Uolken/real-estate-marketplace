@@ -48,7 +48,8 @@ public class HouseController {
 
     @GetMapping("/house")
     public List<House> getHouse() {
-        return houseService.findAll();
+        List<House> houses = houseService.findAll();
+        return houses;
     }
 
     @GetMapping("/house/{id}")
@@ -65,15 +66,25 @@ public class HouseController {
     public void publishAd(Authentication authentication, @ModelAttribute AdDtoRequest ad) throws Exception {
         User user = (authentication != null) ? (User) authentication.getPrincipal() : null;
         House house = new House();
-        String[] split = ad.getAddress().split(",");
+        String[] split = ad.getCoordinates().split(",");
+        house.setCountry(ad.getCountry());
+        house.setCity(ad.getCity());
+        house.setStreet(ad.getStreet());
+        house.setBuildingNumber(ad.getBuildingNumber());
         house.setLat(Double.parseDouble(split[1]));
         house.setLng(Double.parseDouble(split[0]));
         house.setOwner(user);
-        house.setPrice(ad.getPrice());
         house.setStatus(HouseStatus.valueOf(ad.getType()));
+        house.setPrice(ad.getPrice());
+        house.setArea(ad.getArea());
+        house.setCountOfFloor(ad.getCountOfFloor());
+        house.setCountOfRoom(ad.getCountOfRoom());
+        house.setFloor(ad.getFloor());
+        house.setDescription(ad.getDescription());
+
 
         for (MultipartFile i : ad.getFiles()){
-            house.getPictures().add(imageService.saveImage(i));
+            house.getPictures().add(imageService.saveImage(i).getId());
         }
         houseService.saveHouse(house);
     }

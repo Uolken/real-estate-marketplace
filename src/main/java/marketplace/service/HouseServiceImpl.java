@@ -41,7 +41,8 @@ public class HouseServiceImpl implements HouseService {
 
     @Override
     public List<House> findAll() {
-        return (List<House>) houseRepos.findAll();
+        List<House> houses =  (List<House>) houseRepos.findAll();
+        return houses;
     }
 
     @Autowired

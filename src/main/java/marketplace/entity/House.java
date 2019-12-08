@@ -22,15 +22,17 @@ public class House {
     private HouseStatus status;
     private Integer price;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Image> pictures;
+//    @OneToMany(fetch = FetchType.EAGER)
+    @ElementCollection
+    private List<Long> pictures;
+
 
     private String country;
     private String city;
     private String street;
     private Integer buildingNumber;
 
-    private Integer countOfRoomInHouse;
+    private Integer countOfRoom;
     private Integer countOfFloor;
     private Integer floor;
     private Integer area;
@@ -44,7 +46,7 @@ public class House {
         this.pictures = new ArrayList<>();
     }
 
-    public House(Double lat, Double lng, User owner, HouseStatus status, Integer price, List<Image> pictures, String country, String city, String street, Integer buildingNumber, Integer countOfRoomInHouse, Integer countOfFloor, Integer floor, Integer area, String description) {
+    public House(Double lat, Double lng, User owner, HouseStatus status, Integer price, List<Long> pictures, String country, String city, String street, Integer buildingNumber, Integer countOfRoom, Integer countOfFloor, Integer floor, Integer area, String description) {
         this.lat = lat;
         this.lng = lng;
         this.owner = owner;
@@ -55,7 +57,7 @@ public class House {
         this.city = city;
         this.street = street;
         this.buildingNumber = buildingNumber;
-        this.countOfRoomInHouse = countOfRoomInHouse;
+        this.countOfRoom = countOfRoom;
         this.countOfFloor = countOfFloor;
         this.floor = floor;
         this.area = area;
@@ -110,11 +112,11 @@ public class House {
         this.price = price;
     }
 
-    public List<Image> getPictures() {
+    public List<Long> getPictures() {
         return pictures;
     }
 
-    public void setPictures(List<Image> pictures) {
+    public void setPictures(List<Long> pictures) {
         this.pictures = pictures;
     }
 
@@ -150,12 +152,12 @@ public class House {
         this.buildingNumber = buildingNumber;
     }
 
-    public Integer getCountOfRoomInHouse() {
-        return countOfRoomInHouse;
+    public Integer getCountOfRoom() {
+        return countOfRoom;
     }
 
-    public void setCountOfRoomInHouse(Integer countOfRoomInHouse) {
-        this.countOfRoomInHouse = countOfRoomInHouse;
+    public void setCountOfRoom(Integer countOfRoom) {
+        this.countOfRoom = countOfRoom;
     }
 
     public Integer getCountOfFloor() {
