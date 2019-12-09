@@ -39,6 +39,7 @@ public class HouseController {
             @RequestParam Double southWest_y,
             @RequestParam Double northEast_x,
             @RequestParam Double northEast_y
+
     ) {
 
         List<House> houses = houseService.findMarkerByCoord(southWest_x, southWest_y, northEast_x, northEast_y);
@@ -47,8 +48,11 @@ public class HouseController {
 
 
     @GetMapping("/house")
-    public List<House> getHouse() {
-        List<House> houses = houseService.findAll();
+    public List<House> getHouse(
+            @RequestParam(required = false) String userId
+    ) {
+
+        List<House> houses = houseService.findAll(userId);
         return houses;
     }
 

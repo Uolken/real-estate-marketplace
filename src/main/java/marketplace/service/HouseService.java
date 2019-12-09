@@ -9,4 +9,5 @@ public interface HouseService {
     public List<House> findMarkerByCoord(Double leftLat, Double leftLng, Double rightLat, Double rightLng);
     public House findById(Long id) throws Exception;
     public List<House> findAll();
+    public List<House> findAll(String userId);
 }
