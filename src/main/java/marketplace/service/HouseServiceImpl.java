@@ -19,19 +19,40 @@ public class HouseServiceImpl implements HouseService {
 
     private HouseRepos houseRepos;
 
+    private int states = HouseStatus.class.getEnumConstants().length;
+
     @Override
     public void saveHouse(House house) {
         houseRepos.save(house);
     }
 
     @Override
-    public List<House> findMarkerByCoord(Double leftLat, Double leftLng, Double rightLat, Double rightLng) {
+    public List<House> findMarkers(Double leftLat, Double leftLng, Double rightLat, Double rightLng, HouseStatus[] houseStatuses) {
 
-        return houseRepos.findAll((Specification<House>) (root, criteriaQuery, criteriaBuilder) ->
-                criteriaBuilder.and(
-                        criteriaBuilder.between(root.get("lat"), leftLat, rightLat),
-                        criteriaBuilder.between(root.get("lng"), leftLng, rightLng)
-                ));
+        Specification<House> specification = new Specification<House>() {
+            @Override
+            public Predicate toPredicate(Root<House> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList<>();
+
+                predicates.add(criteriaBuilder.between(root.get("lat"), leftLat, rightLat));
+                predicates.add(criteriaBuilder.between(root.get("lng"), leftLng, rightLng));
+
+                if (houseStatuses != null && houseStatuses.length > 0 && houseStatuses.length < states){
+                    predicates.add(criteriaBuilder.isTrue(root.get("status").in(houseStatuses)));
+                }
+
+                return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+
+            }
+        };
+        return houseRepos.findAll(specification);
+
+
+//        return houseRepos.findAll((Specification<House>) (root, criteriaQuery, criteriaBuilder) ->
+//                criteriaBuilder.and(
+//                        criteriaBuilder.between(root.get("lat"), leftLat, rightLat),
+//                        criteriaBuilder.between(root.get("lng"), leftLng, rightLng)
+//                ));
     }
 
     @Override
@@ -55,7 +76,7 @@ public class HouseServiceImpl implements HouseService {
                 if (userId != null) {
                     predicates.add(criteriaBuilder.equal(root.get("owner").get("id"), userId));
                 }
-                if (houseTypes != null && houseTypes.length > 0 && houseTypes.length < 2){
+                if (houseTypes != null && houseTypes.length > 0 && houseTypes.length < states){
                     predicates.add(criteriaBuilder.isTrue(root.get("status").in(houseTypes)));
                 }
 

@@ -38,11 +38,12 @@ public class HouseController {
             @RequestParam Double southWest_x,
             @RequestParam Double southWest_y,
             @RequestParam Double northEast_x,
-            @RequestParam Double northEast_y
+            @RequestParam Double northEast_y,
+            @RequestParam(required = false) HouseStatus[] houseTypes
 
     ) {
 
-        List<House> houses = houseService.findMarkerByCoord(southWest_x, southWest_y, northEast_x, northEast_y);
+        List<House> houses = houseService.findMarkers(southWest_x, southWest_y, northEast_x, northEast_y, houseTypes);
         return houses;
     }
 
