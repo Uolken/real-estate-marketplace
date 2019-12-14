@@ -49,10 +49,11 @@ public class HouseController {
 
     @GetMapping("/house")
     public List<House> getHouse(
-            @RequestParam(required = false) String userId
+            @RequestParam(required = false) String userId,
+            @RequestParam(required = false) HouseStatus[] houseTypes
     ) {
 
-        List<House> houses = houseService.findAll(userId);
+        List<House> houses = houseService.findAll(userId, houseTypes);
         return houses;
     }
 

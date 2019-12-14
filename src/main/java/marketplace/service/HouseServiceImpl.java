@@ -1,6 +1,7 @@
 package marketplace.service;
 
 import marketplace.entity.House;
+import marketplace.entity.HouseStatus;
 import marketplace.repos.HouseRepos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -45,7 +46,7 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public List<House> findAll(String userId) {
+    public List<House> findAll(String userId, HouseStatus[] houseTypes) {
         Specification<House> specification = new Specification<House>() {
             @Override
             public Predicate toPredicate(Root<House> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
@@ -53,6 +54,9 @@ public class HouseServiceImpl implements HouseService {
 
                 if (userId != null) {
                     predicates.add(criteriaBuilder.equal(root.get("owner").get("id"), userId));
+                }
+                if (houseTypes != null && houseTypes.length > 0 && houseTypes.length < 2){
+                    predicates.add(criteriaBuilder.isTrue(root.get("status").in(houseTypes)));
                 }
 
                 return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
