@@ -1,5 +1,7 @@
 package marketplace.entity;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ public class House {
     private Integer floor;
     private Integer area;
 
+    @Lob
     private String description;
 
 
