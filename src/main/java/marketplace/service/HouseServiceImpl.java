@@ -27,7 +27,15 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public List<House> findMarkers(Double leftLat, Double leftLng, Double rightLat, Double rightLng, HouseStatus[] houseStatuses) {
+    public List<House> findMarkers(Double leftLat,
+                                   Double leftLng,
+                                   Double rightLat,
+                                   Double rightLng,
+                                   HouseStatus[] houseStatuses,
+                                   List<Integer> countOfRoom,
+                                   Integer priceFrom,
+                                   Integer priceTo
+    ) {
 
         Specification<House> specification = new Specification<House>() {
             @Override
@@ -39,6 +47,26 @@ public class HouseServiceImpl implements HouseService {
 
                 if (houseStatuses != null && houseStatuses.length > 0 && houseStatuses.length < states){
                     predicates.add(criteriaBuilder.isTrue(root.get("status").in(houseStatuses)));
+                }
+
+                if (countOfRoom != null && countOfRoom.size() > 0){
+                    if (countOfRoom.contains(6)){
+                        predicates.add(
+                                criteriaBuilder.or(root.get("countOfRoom").in(countOfRoom),
+                                        criteriaBuilder.greaterThan(root.get("countOfRoom"),6)
+                                )
+                        );
+                    }else{
+                        predicates.add(root.get("countOfRoom").in(countOfRoom));
+                    }
+                }
+
+                if (priceFrom != null){
+                    predicates.add(criteriaBuilder.greaterThan(root.get("price"),priceFrom));
+                }
+
+                if (priceTo != null){
+                    predicates.add(criteriaBuilder.lessThan(root.get("price"),priceTo));
                 }
 
                 return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

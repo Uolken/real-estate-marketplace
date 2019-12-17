@@ -7,7 +7,14 @@ import java.util.List;
 
 public interface HouseService {
     public void saveHouse(House house);
-    public List<House> findMarkers(Double leftLat, Double leftLng, Double rightLat, Double rightLng, HouseStatus[] houseStatuses);
+    public List<House> findMarkers(Double leftLat,
+                                   Double leftLng,
+                                   Double rightLat,
+                                   Double rightLng,
+                                   HouseStatus[] houseStatuses,
+                                   List<Integer> countOfRoom,
+                                   Integer priceFrom,
+                                   Integer priceTo);
     public House findById(Long id) throws Exception;
     public List<House> findAll();
 

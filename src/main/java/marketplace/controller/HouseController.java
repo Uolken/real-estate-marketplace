@@ -47,7 +47,7 @@ public class HouseController {
 
     ) {
 
-        List<House> houses = houseService.findMarkers(southWest_x, southWest_y, northEast_x, northEast_y, houseTypes);
+        List<House> houses = houseService.findMarkers(southWest_x, southWest_y, northEast_x, northEast_y, houseTypes, countOfRoom, priceFrom, priceTo);
         return houses;
     }
 
