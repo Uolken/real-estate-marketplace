@@ -45,6 +45,7 @@ public class HouseServiceImpl implements HouseService {
 
             }
         };
+
         return houseRepos.findAll(specification);
 
 
@@ -67,7 +68,11 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public List<House> findAll(String userId, HouseStatus[] houseTypes) {
+    public List<House> findAll(String userId,
+                               HouseStatus[] houseTypes,
+                               List<Integer> countOfRoom,
+                               Integer priceFrom,
+                               Integer priceTo) {
         Specification<House> specification = new Specification<House>() {
             @Override
             public Predicate toPredicate(Root<House> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
@@ -79,6 +84,27 @@ public class HouseServiceImpl implements HouseService {
                 if (houseTypes != null && houseTypes.length > 0 && houseTypes.length < states){
                     predicates.add(criteriaBuilder.isTrue(root.get("status").in(houseTypes)));
                 }
+
+                if (countOfRoom != null && countOfRoom.size() > 0){
+                    if (countOfRoom.contains(6)){
+                        predicates.add(
+                                criteriaBuilder.or(root.get("countOfRoom").in(countOfRoom),
+                                        criteriaBuilder.greaterThan(root.get("countOfRoom"),6)
+                                )
+                        );
+                    }else{
+                        predicates.add(root.get("countOfRoom").in(countOfRoom));
+                    }
+                }
+
+                if (priceFrom != null){
+                    predicates.add(criteriaBuilder.greaterThan(root.get("price"),priceFrom));
+                }
+
+                if (priceTo != null){
+                    predicates.add(criteriaBuilder.lessThan(root.get("price"),priceTo));
+                }
+
 
                 return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
 

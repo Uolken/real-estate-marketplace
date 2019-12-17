@@ -10,5 +10,10 @@ public interface HouseService {
     public List<House> findMarkers(Double leftLat, Double leftLng, Double rightLat, Double rightLng, HouseStatus[] houseStatuses);
     public House findById(Long id) throws Exception;
     public List<House> findAll();
-    public List<House> findAll(String userId, HouseStatus[] houseTypes);
+
+    public List<House> findAll(String userId,
+                               HouseStatus[] houseTypes,
+                               List<Integer> countOfRoom,
+                               Integer priceFrom,
+                               Integer priceTo);
 }

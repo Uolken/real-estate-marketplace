@@ -39,7 +39,11 @@ public class HouseController {
             @RequestParam Double southWest_y,
             @RequestParam Double northEast_x,
             @RequestParam Double northEast_y,
-            @RequestParam(required = false) HouseStatus[] houseTypes
+            @RequestParam(required = false) HouseStatus[] houseTypes,
+            @RequestParam(required = false) List<Integer> countOfRoom,
+            @RequestParam(required = false) Integer priceFrom,
+            @RequestParam(required = false) Integer priceTo
+
 
     ) {
 
@@ -51,10 +55,13 @@ public class HouseController {
     @GetMapping("/house")
     public List<House> getHouse(
             @RequestParam(required = false) String userId,
-            @RequestParam(required = false) HouseStatus[] houseTypes
+            @RequestParam(required = false) HouseStatus[] houseTypes,
+            @RequestParam(required = false) List<Integer> countOfRoom,
+            @RequestParam(required = false) Integer priceFrom,
+            @RequestParam(required = false) Integer priceTo
     ) {
 
-        List<House> houses = houseService.findAll(userId, houseTypes);
+        List<House> houses = houseService.findAll(userId, houseTypes, countOfRoom, priceFrom, priceTo);
         return houses;
     }
 
