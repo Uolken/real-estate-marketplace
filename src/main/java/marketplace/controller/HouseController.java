@@ -14,13 +14,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8080")
-@RestController
+//@RestController
+@Controller
 public class HouseController {
 
     private HouseService houseService;
@@ -32,7 +34,7 @@ public class HouseController {
         this.houseService = houseService;
         this.imageService = imageService;
     }
-
+    @ResponseBody
     @GetMapping("/points")
     public List<House> getPointsByCoord(
             @RequestParam Double southWest_x,
@@ -51,7 +53,7 @@ public class HouseController {
         return houses;
     }
 
-
+    @ResponseBody
     @GetMapping("/house")
     public List<House> getHouse(
             @RequestParam(required = false) String userId,
@@ -65,18 +67,20 @@ public class HouseController {
         return houses;
     }
 
+    @ResponseBody
     @GetMapping("/house/{id}")
     public House getHouse(@PathVariable Long id) throws Exception {
         return houseService.findById(id);
     }
 
+    @ResponseBody
     @PostMapping("/points")
     public void addPoints(@RequestBody House house) {
         houseService.saveHouse(house);
     }
 
     @PostMapping("/publish_ad")
-    public void publishAd(Authentication authentication, @ModelAttribute AdDtoRequest ad) throws Exception {
+    public String publishAd(Authentication authentication, @ModelAttribute AdDtoRequest ad) throws Exception {
         User user = (authentication != null) ? (User) authentication.getPrincipal() : null;
         House house = new House();
         String[] split = ad.getCoordinates().split(",");
@@ -100,15 +104,17 @@ public class HouseController {
             house.getPictures().add(imageService.saveImage(i).getId());
         }
         houseService.saveHouse(house);
+        return "redirect:/#/map/"+ house.getId();
     }
 
-
+    @ResponseBody
     @PostMapping("/upload")
     String uploadImage(@RequestParam(value = "file", required = false) MultipartFile file) {
         imageService.saveImage(file);
         return "Success";
     }
 
+    @ResponseBody
     @GetMapping("/img/{imgId}")
     public ResponseEntity<Resource> downloadFile(@PathVariable Long imgId) {
         // Load file from database
