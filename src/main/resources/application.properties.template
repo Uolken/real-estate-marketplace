@@ -1,0 +1,18 @@
+## Mysql
+#spring.datasource.driverClassName=com.mysql.jdbc.Driver
+spring.datasource.url=${DATABASE_URL}
+spring.datasource.username=${DATABASE_USERNAME}
+spring.datasource.password=${DATABASE_PASSWORD}
+spring.jpa.hibernate.ddl-auto=update
+server.port=8080
+
+
+security.oauth2.client.clientId=${CLIENT_ID}
+security.oauth2.client.clientSecret=${CLIENT_SECRET}
+security.oauth2.client.accessTokenUri=https://www.googleapis.com/oauth2/v4/token
+security.oauth2.client.userAuthorizationUri=https://accounts.google.com/o/oauth2/v2/auth
+security.oauth2.client.clientAuthenticationScheme=form
+security.oauth2.client.scope=openid,email,profile
+security.oauth2.resource.userInfoUri=https://www.googleapis.com/oauth2/v3/userinfo
+security.oauth2.resource.preferTokenInfo=true
+spring.main.allow-bean-definition-overriding: true
